@@ -56,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.mijia_lywsd02.MijiaL
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miscale2.MiScale2DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.no1f1.No1F1Support;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.PebbleSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.pinetime.PineTimeJFSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.roidmi.RoidmiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.vibratissimo.VibratissimoSupport;
@@ -240,6 +241,9 @@ public class DeviceSupportFactory {
                         break;
                     case BANGLEJS:
                         deviceSupport = new ServiceDeviceSupport(new BangleJSDeviceSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case PINETIME_JF:
+                        deviceSupport = new ServiceDeviceSupport(new PineTimeJFSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
                 }
                 if (deviceSupport != null) {

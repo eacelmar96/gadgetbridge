@@ -73,6 +73,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.mijia_lywsd02.MijiaLywsd02Co
 import nodomain.freeyourgadget.gadgetbridge.devices.miscale2.MiScale2DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.no1f1.No1F1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.pinetime.PineTimeJFCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.Roidmi1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.Roidmi3Coordinator;
@@ -250,6 +251,7 @@ public class DeviceHelper {
         result.add(new ITagCoordinator());
         result.add(new MakibesHR3Coordinator());
         result.add(new BangleJSCoordinator());
+        result.add(new PineTimeJFCoordinator());
 
         return result;
     }
