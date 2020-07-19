@@ -74,7 +74,8 @@ public class BangleJSCoordinator extends AbstractDeviceCoordinator {
               name.startsWith("Pixl.js") ||
               name.startsWith("Puck.js") ||
               name.startsWith("MDBT42Q") ||
-              name.startsWith("Espruino"))) 
+              name.startsWith("Espruino") ||
+              name.startsWith("PineTime")))
             return DeviceType.BANGLEJS;
 
         return DeviceType.UNKNOWN;
