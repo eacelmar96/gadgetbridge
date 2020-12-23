@@ -71,6 +71,7 @@ public enum DeviceType {
     MIJIA_LYWSD02(200, R.drawable.ic_device_pebble, R.drawable.ic_device_pebble_disabled, R.string.devicetype_mijia_lywsd02),
     ITAG(250, R.drawable.ic_device_itag, R.drawable.ic_device_itag_disabled, R.string.devicetype_itag),
     VIBRATISSIMO(300, R.drawable.ic_device_lovetoy, R.drawable.ic_device_lovetoy_disabled, R.string.devicetype_vibratissimo),
+    WASPOS(310, R.drawable.ic_device_pebble, R.drawable.ic_device_pebble_disabled, R.string.devicetype_waspos),
     TEST(1000, R.drawable.ic_device_default, R.drawable.ic_device_default_disabled, R.string.devicetype_test);
 
     private final int key;
