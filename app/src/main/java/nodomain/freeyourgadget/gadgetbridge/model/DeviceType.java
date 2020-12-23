@@ -86,6 +86,7 @@ public enum DeviceType {
     NUTMINI(251, R.drawable.ic_device_itag, R.drawable.ic_device_itag_disabled, R.string.devicetype_nut_mini),
     VIBRATISSIMO(300, R.drawable.ic_device_lovetoy, R.drawable.ic_device_lovetoy_disabled, R.string.devicetype_vibratissimo),
     SONY_SWR12(310, R.drawable.ic_device_default, R.drawable.ic_device_default_disabled, R.string.devicetype_sonyswr12),
+    WASPOS(320, R.drawable.ic_device_pebble, R.drawable.ic_device_pebble_disabled, R.string.devicetype_waspos),
     TEST(1000, R.drawable.ic_device_default, R.drawable.ic_device_default_disabled, R.string.devicetype_test);
 
     private final int key;
