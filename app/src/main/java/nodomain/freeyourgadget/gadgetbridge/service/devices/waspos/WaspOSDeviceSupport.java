@@ -30,6 +30,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.SimpleTimeZone;
@@ -104,9 +106,9 @@ public class WaspOSDeviceSupport extends AbstractBTLEDeviceSupport {
         LOG.info("UART TX: " + str);
         byte[] bytes;
         bytes = str.getBytes(StandardCharsets.ISO_8859_1);
-        for (int i=0;i<bytes.length;i+=20) {
+        for (int i=0;i<bytes.length;i+=8) {
             int l = bytes.length-i;
-            if (l>20) l=20;
+            if (l>8) l=8;
             byte[] packet = new byte[l];
             System.arraycopy(bytes, i, packet, 0, l);
             builder.write(txCharacteristic, packet);
@@ -239,15 +241,10 @@ public class WaspOSDeviceSupport extends AbstractBTLEDeviceSupport {
 
 
     void setTime(TransactionBuilder builder) {
-      long ts = System.currentTimeMillis();
-      float tz = SimpleTimeZone.getDefault().getOffset(ts) / (1000 * 60 * 60.0f);
-      // set time
-      String cmd = "\u0010setTime("+(ts/1000)+");";
-      // set timezone
-      cmd += "E.setTimeZone("+tz+");";
-      // write timezone to settings
-      cmd += "(s=>{s&&(s.timezone="+tz+")&&require('Storage').write('setting.json',s);})(require('Storage').readJSON('setting.json',1))";
-      uartTx(builder, cmd+"\n");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("(yyyy, MM, dd, HH, mm, ss)");
+        LocalDateTime now = LocalDateTime.now();
+        String cmd = "\u0010watch.rtc.set_localtime("+dtf.format(now)+")\n";
+        uartTx(builder, cmd+"\n");
     }
 
     @Override
