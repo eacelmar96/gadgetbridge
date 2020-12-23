@@ -83,7 +83,7 @@ public class WaspOSCoordinator extends AbstractDeviceCoordinator {
     @Override
     public int getBondingStyle(){
         // Let the user decide whether to bond or not after discovery.
-        return BONDING_STYLE_ASK;
+        return BONDING_STYLE_NONE;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class WaspOSCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public boolean supportsWeather() {
-        return true;
+        return false;
     }
 
     @Override
@@ -138,7 +138,7 @@ public class WaspOSCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public int getAlarmSlotCount() {
-        return 10;
+        return 0;
     }
 
     @Override
