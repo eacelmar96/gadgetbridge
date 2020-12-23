@@ -1,0 +1,28 @@
+name: Gadgetbridge apk autobuilder
+
+on:
+  push:
+    branches: [ wasp-os ]
+  pull_request:
+    branches: [ wasp-os ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout files
+      uses: actions/checkout@v2
+
+    - name: Build Gadgetbridge
+      run:  |
+          ./gradlew build
+          find . -name "*.apk"
+
+    - name: Upload the application binary
+      uses: actions/upload-artifact@v2
+      with:
+          name: gadgetbridge-${{ github.sha }}
+          path: |
+            ./app/build/outputs/apk/debug/app-debug.apk
+            ./app/build/outputs/apk/release/app-release-unsigned.apk
