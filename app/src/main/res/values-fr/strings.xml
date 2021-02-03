@@ -347,18 +347,23 @@ Temps de sommeil préféré en heures</string>
     <string name="live_activity_heart_rate">Fréquence cardiaque</string>
     <string name="pref_title_pebble_health_store_raw">Stockez les enregistrements brut dans la base de données</string>
     <string name="pref_summary_pebble_health_store_raw">Si coché, les données « brutes » sont stockées pour une interprétation ultérieure, augmentant la taille de la base de données.</string>
-    <string name="action_db_management">Gestion de base de données</string>
-    <string name="title_activity_db_management">Gestion de base de données</string>
-    <string name="activity_db_management_import_export_explanation">Les opérations sur la base de données ont utilisé le chemin suivant sur votre appareil. 
-\nCe chemin est accessible par d\'autres applications Android ou par votre ordinateur. 
-\nVotre base de données (ou celle que vous souhaitez importer) se trouvera ici :</string>
+    <string name="action_db_management">Gestion des données</string>
+    <string name="title_activity_db_management">Gestion des données</string>
+    <string name="activity_db_management_import_export_explanation">Les opérations d\'Import/Export utilisent le répertoire suivant (voir ci-dessous) sur votre appareil. Ce répertoire est accessible à d\'autres applications Android et depuis votre ordinateur. Merci de prendre note que ce répertoire et tout son contenu seront effacés si vous désinstallez Gadgetbridge. Cela inclut :
+\n Export_preference - réglages généraux
+\n Export_preference_MAC - réglages spécifiques à l\'appareil
+\n Gadgetbridge - base de données des appareils et activités
+\n Gadgetbridge_date - export de la base de données sur une date
+\n *.gpx - enregistrements GPS
+\n *.log - fichiers de log
+\nAttendez-vous à trouver vos fichiers exportés (ou à placer là les fichiers que vous voulez importer) à cet endroit :</string>
     <string name="activity_db_management_merge_old_title">Effacer l\'ancienne base de données</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Impossible d\'accéder au fichier d\'export. Merci de contacter les développeurs.</string>
     <string name="dbmanagementactivity_exported_to">Exporter vers : %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Erreur d\'exportation de la base de données : %1$s</string>
     <string name="dbmanagementactivity_error_exporting_shared">Erreur d\'exportation des préférences : %1$s</string>
     <string name="dbmanagementactivity_import_data_title">Importer des données ?</string>
-    <string name="dbmanagementactivity_overwrite_database_confirmation">Voulez-vous vraiment effacer la base de données actuelle ? Toutes vos données (si vous en avez) seront perdues.</string>
+    <string name="dbmanagementactivity_overwrite_database_confirmation">Voulez-vous vraiment écraser les données actuelles \? Toutes vos données actuelles d\'activité (s\'il y en a) et de préférences seront écrasées.</string>
     <string name="dbmanagementactivity_import_successful">Importé.</string>
     <string name="dbmanagementactivity_error_importing_db">Erreur lors de l\'importation de la base de données : %1$s</string>
     <string name="dbmanagementactivity_error_importing_shared">Erreur d\'importation des préférences : %1$s</string>
@@ -734,8 +739,8 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_summary_use_custom_font">Activer ceci afin d’afficher les émojis si votre appareil a un micrologiciel de police personnalisée</string>
     <string name="activity_db_management_autoexport_explanation">L\'export automatique des données est réglé vers :</string>
     <string name="activity_db_management_autoexport_label">Exportation automatique</string>
-    <string name="activity_DB_ExportButton">Exporter la base de données</string>
-    <string name="activity_DB_import_button">Importer la base de données</string>
+    <string name="activity_DB_ExportButton">Exporter les données</string>
+    <string name="activity_DB_import_button">Importer les données</string>
     <string name="activity_DB_test_export_button">Lancer immédiatement l\'exportation automatique</string>
     <string name="activity_DB_delete_legacy_button">Supprimer l\'ancienne base de données</string>
     <string name="activity_DB_empty_button">Vider la base de données</string>
@@ -1124,4 +1129,32 @@ Temps de sommeil préféré en heures</string>
     <string name="menuitem_pomodoro">Tracker Pomodoro</string>
     <string name="menuitem_sleep">Sommeil</string>
     <string name="menuitem_goal">Objectif d\'activité</string>
+    <string name="pref_summary_connected_advertisement">Rend l\'appareil découvrable via Bluetooth même si connecté</string>
+    <string name="pref_title_connected_advertisement">Visible si connecté</string>
+    <string name="prefs_autoremove_message">Désactiver automatiquement les notifications SMS</string>
+    <string name="prefs_fake_ring_duration">Simulation de sonnerie permanente</string>
+    <string name="prefs_operating_sounds">Sons en fonctionnement</string>
+    <string name="prefs_key_vibration">Mode de vibration</string>
+    <string name="prefs_autolight">Éclairage automatique</string>
+    <string name="discovery_entered_invalid_authkey">La clé secrète d\'identification saisie est invalide ! Faire un appui long sur l\'appareil pour la modifier.</string>
+    <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
+    <string name="fw_upgrade_notice_amazfitvergel">Vous êtes sur le point d\'installer le firmware %s dans votre Amazfit Verge Lite.
+\n
+\nAssurez-vous d\'installer le fichien .fw, puis le fichier .res, et pour finir le fichier .gps. Votre montre va redémarrer après l\'installation du fichier .fw.
+\n
+\nRemarque: Vous n\'avez pas besoin d\'installer les fichiers .res et .gps si ce sont exactement les mêmes fichiers que précédemment.
+\n
+\nMANIPULATION À VOS RISQUES ET PÉRILS !</string>
+    <string name="activity_DB_ShowContentButton">Montrer le contenu du répertoire d\'Import/Export</string>
+    <string name="activity_data_management_directory_content_title">Exporter/Importer le contenu du répertoire</string>
+    <string name="widget_settings_select_device_title">Choisir l\'appareil</string>
+    <string name="dbmanagementactivity_export_confirmation">Exporter réellement les données \? Les données et les préférences précédemment exportées (s\'il y en a) seront écrasées.</string>
+    <string name="dbmanagementactivity_export_data_title">Exporter les Données \?</string>
+    <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
+    <string name="dbmanagementactivity_export_finished">Suppression terminée</string>
+    <string name="activity_db_management_clean_export_directory_text">Les fichiers exportés dans le répertoire d\'Import/Export sont accessibles depuis n\'importe quelle application sur votre appareil. Il est préférable de supprimer ces fichiers après synchronisation ou sauvegarde. Assurez-vous d\'avoir une sauvegarde avant de supprimer les fichiers. Les fichiers GPX, les sous-répertoires, et les fichiers de base de données auto-exportés (s\'ils existent) ne seront pas supprimés. Le chemin du répertoire d\'Import/Export est:</string>
+    <string name="activity_DB_clean_export_directory_warning_message">Vraiment effacer les fichiers dans le répertoire d\'Import/Export \?</string>
+    <string name="activity_DB_clean_export_directory_warning_title">Effacer les fichiers dans le répertoire d\'Import/Export \?</string>
+    <string name="activity_db_management_clean_export_directory_label">Effacer les fichiers dans le répertoire d\'Import/Export</string>
+    <string name="dbmanagementactivity_error_cleaning_export_directory">Erreur lors de l\'effacement des fichiers du répertoire d\'exportation %1$s</string>
 </resources>

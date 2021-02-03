@@ -1,6 +1,7 @@
-/*  Copyright (C) 2015-2020 Andreas Shimokawa, atkyritsis, Carsten Pfeiffer,
-    Christian Fischer, Daniele Gobbetti, freezed-or-frozen, JohnnySun, Julien
-    Pivotto, Kasha, Sebastian Kranz, Sergey Trofimov, Steffen Liebergeld
+/*  Copyright (C) 2015-2021 Andreas Shimokawa, atkyritsis, Carsten Pfeiffer,
+    Christian Fischer, Daniele Gobbetti, Dmitry Markin, freezed-or-frozen,
+    JohnnySun, Julien Pivotto, Kasha, Sebastian Kranz, Sergey Trofimov, Steffen
+    Liebergeld
 
     This file is part of Gadgetbridge.
 
@@ -326,7 +327,7 @@ public class MiBandSupport extends AbstractBTLEDeviceSupport {
         LOG.debug("Requesting Device Info!");
         BluetoothGattCharacteristic deviceInfo = getCharacteristic(MiBandService.UUID_CHARACTERISTIC_DEVICE_INFO);
         builder.read(deviceInfo);
-        BluetoothGattCharacteristic deviceName = getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_GAP_DEVICE_NAME);
+        BluetoothGattCharacteristic deviceName = getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_DEVICE_NAME);
         builder.read(deviceName);
         return this;
     }
@@ -907,7 +908,7 @@ public class MiBandSupport extends AbstractBTLEDeviceSupport {
         if (MiBandService.UUID_CHARACTERISTIC_DEVICE_INFO.equals(characteristicUUID)) {
             handleDeviceInfo(characteristic.getValue(), status);
             return true;
-        } else if (GattCharacteristic.UUID_CHARACTERISTIC_GAP_DEVICE_NAME.equals(characteristicUUID)) {
+        } else if (GattCharacteristic.UUID_CHARACTERISTIC_DEVICE_NAME.equals(characteristicUUID)) {
             handleDeviceName(characteristic.getValue(), status);
             return true;
         } else if (MiBandService.UUID_CHARACTERISTIC_BATTERY.equals(characteristicUUID)) {

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2015-2021 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti, Felix Konstantin Maurer, JohnnySun, Taavi Eomäe
 
     This file is part of Gadgetbridge.
@@ -337,5 +337,17 @@ public class FileUtils {
      */
     public static String makeValidFileName(String name) {
         return name.replaceAll("[\0/:\\r\\n\\\\]", "_");
+    }
+    /**
+     *Returns extension of a file
+     * @param file string filename
+     */
+    public static String getExtension(String file) {
+        int i = file.lastIndexOf('.');
+        String extension = "";
+        if (i > 0) {
+            extension = file.substring(i + 1);
+        }
+        return extension;
     }
 }

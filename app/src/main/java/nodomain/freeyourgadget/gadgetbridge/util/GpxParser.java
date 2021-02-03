@@ -1,5 +1,23 @@
+/*  Copyright (C) 2020-2021 Petr Vaněk
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -12,8 +30,9 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 
 public class GpxParser {
+    private static final Logger LOG = LoggerFactory.getLogger(GpxParser.class);
     private XmlPullParser parser;
-    private List<GPSCoordinate> points;
+    private List<GPSCoordinate> points = new ArrayList<>();
     private int eventType;
 
     public GpxParser(InputStream stream) {
@@ -36,11 +55,13 @@ public class GpxParser {
 
     private void parseGpx() throws XmlPullParserException, IOException {
         eventType = parser.getEventType();
+
         while (eventType != XmlPullParser.END_DOCUMENT) {
-            if (eventType == XmlPullParser.START_TAG && parser.getName().equals("trkpt"))
+            if (eventType == XmlPullParser.START_TAG && parser.getName().equals("trkpt")) {
                 points.add(parsePoint(parser));
-            else
+            } else {
                 eventType = parser.next();
+            }
         }
     }
 

@@ -279,7 +279,7 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
         deviceCandidatesView.setOnItemClickListener(this);
         deviceCandidatesView.setOnItemLongClickListener(this);
 
-        removeBroadcastReceivers();
+        registerBroadcastReceivers();
 
         checkAndRequestLocationPermission();
 
@@ -336,6 +336,12 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
         unregisterBroadcastReceivers();
         stopAllDiscovery();
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        registerBroadcastReceivers();
+        super.onResume();
     }
 
     private void stopAllDiscovery() {
@@ -779,7 +785,7 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
         AndroidUtils.safeUnregisterBroadcastReceiver(this, bluetoothReceiver);
     }
 
-    public void removeBroadcastReceivers() {
+    public void registerBroadcastReceivers() {
         IntentFilter bluetoothIntents = new IntentFilter();
         bluetoothIntents.addAction(BluetoothDevice.ACTION_FOUND);
         bluetoothIntents.addAction(BluetoothDevice.ACTION_UUID);

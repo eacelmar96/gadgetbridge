@@ -1,4 +1,5 @@
-/*  Copyright (C) 2020 Andreas Shimokawa, Taavi Eomäe
+/*  Copyright (C) 2016-2021 Andreas Shimokawa, Carsten Pfeiffer, JF, Sebastian
+    Kranz, Taavi Eomäe
 
     This file is part of Gadgetbridge.
 
@@ -167,7 +168,7 @@ public class PineTimeJFSupport extends AbstractBTLEDeviceSupport implements DfuL
             handler = null;
             controller = null;
             DfuServiceListenerHelper.unregisterProgressListener(getContext(), progressListener);
-
+            gbDevice.unsetBusyTask();
             // TODO: Request reconnection
         }
 
@@ -180,11 +181,13 @@ public class PineTimeJFSupport extends AbstractBTLEDeviceSupport implements DfuL
         @Override
         public void onDfuAborted(final String mac) {
             this.setProgressText(getContext().getString(R.string.devicestatus_upload_aborted));
+            gbDevice.unsetBusyTask();
         }
 
         @Override
         public void onError(final String mac, int error, int errorType, final String message) {
             this.setProgressText(getContext().getString(R.string.devicestatus_upload_failed));
+            gbDevice.unsetBusyTask();
         }
 
         @Override
@@ -312,11 +315,15 @@ public class PineTimeJFSupport extends AbstractBTLEDeviceSupport implements DfuL
                 LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT)
                         .putExtra(GB.DISPLAY_MESSAGE_MESSAGE, getContext().getString(R.string.devicestatus_upload_starting))
                 );
+                gbDevice.setBusyTask("firmware upgrade");
             } else {
                 // TODO: Handle invalid firmware files
             }
         } catch (Exception ex) {
             GB.toast(getContext(), getContext().getString(R.string.updatefirmwareoperation_write_failed) + ":" + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+            if (gbDevice.isBusy()) {
+                gbDevice.unsetBusyTask();
+            }
         }
     }
 

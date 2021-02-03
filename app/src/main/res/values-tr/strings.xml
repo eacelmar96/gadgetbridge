@@ -13,16 +13,16 @@
     <string name="abstract_chart_fragment_kind_deep_sleep">Derin uyku</string>
     <string name="abstract_chart_fragment_kind_light_sleep">Hafif uyku</string>
     <string name="abstract_chart_fragment_kind_not_worn">Giyilmedi</string>
-    <string name="action_db_management">Veri tabanı yönetimi</string>
+    <string name="action_db_management">Veri yönetimi</string>
     <string name="action_debug">Hata Ayıklama</string>
     <string name="action_discover">Yeni aygıt bağla</string>
     <string name="action_donate">Bağış Yap</string>
     <string name="action_quit">Çıkış</string>
     <string name="action_settings">Ayarlar</string>
-    <string name="activity_DB_ExportButton">Veri tabanını dışa aktar</string>
+    <string name="activity_DB_ExportButton">Verileri Dışa Aktar</string>
     <string name="activity_DB_delete_legacy_button">Eski veri tabanını sil</string>
-    <string name="activity_DB_empty_button">Veri tabanını boşalt</string>
-    <string name="activity_DB_import_button">Veri tabanını içe aktar</string>
+    <string name="activity_DB_empty_button">Veri Tabanını Boşalt</string>
+    <string name="activity_DB_import_button">Verileri İçe Aktar</string>
     <string name="activity_DB_test_export_button">Otomatik Dışa Aktarmayı Başlat</string>
     <string name="activity_DB_test_export_message">Veri tabanı dışa aktarılıyor…</string>
     <string name="activity_db_management_autoexport_explanation">Veri tabanı otomatik dışa aktarma konumu:</string>
@@ -30,9 +30,14 @@
     <string name="activity_db_management_empty_DB">Veri tabanını boşalt</string>
     <string name="activity_db_management_empty_db_warning">Dikkat! Bu düğmeye basarak veri tabanınızı silecek ve sıfırdan başlayacaksınız.</string>
     <string name="activity_db_management_exportimport_label">Dışa ve İçe Aktar</string>
-    <string name="activity_db_management_import_export_explanation">Veri tabanı işlemleri aygıtınızda aşağıdaki yolu kullanır.
-\nBu yola diğer Android uygulamaları ve bilgisayarınız tarafından erişilebilir.
-\nDışa aktarılan veri tabanınızı burada bulmayı bekleyin (veya içe aktarmak istediğiniz veri tabanını buraya koyun):</string>
+    <string name="activity_db_management_import_export_explanation">Dışa/içe aktarma işlemleri, aygıtınızdaki bir dizine giden aşağıdaki yolu kullanır. Bu dizine diğer Android uygulamaları ve bilgisayarınız tarafından erişilebilir. Gadgetbridge\'i kaldırırsanız, bu dizinin ve içerdiği tüm dosyaların silineceğini unutmayın. Veriler şunları içerir:
+\n Export_preference - genel ayarlar
+\n Export_preference_MAC - aygıta özel ayarlar
+\n Gadgetbridge - aygıt ve etkinlik veri tabanı
+\n Gadgetbridge_date - bir tarihte dışa aktarılan veri tabanı
+\n * .gpx - GPS kayıtları
+\n * .log - günlük dosyaları
+\nDışa aktarılan dosyalarınızı orada bulmayı (veya içe aktarmak istediğiniz dosyaları oraya yerleştirmeyi) bekleyin:</string>
     <string name="activity_db_management_merge_old_title">Eski veri tabanını silme</string>
     <string name="activity_error_no_app_for_gpx">Etkinlik izlemesini görüntülemek için GPX dosyalarını işleyebilen bir uygulama kurun.</string>
     <string name="activity_prefs_about_you">Hakkınızda</string>
@@ -165,7 +170,7 @@
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Eski etkinlik veri tabanının silinmesi başarısız oldu.</string>
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Eski etkinlik verileri silindi.</string>
     <string name="dbmanagementactivity_overwrite">Üzerine Yaz</string>
-    <string name="dbmanagementactivity_overwrite_database_confirmation">Geçerli veri tabanının gerçekten üzerine yazılsın mı\? Tüm etkinlik verileriniz (varsa) kaybolacak.</string>
+    <string name="dbmanagementactivity_overwrite_database_confirmation">Geçerli verilerin gerçekten üzerine yazılsın mı\? Tüm etkinlik verilerinizin (varsa) ve tercihlerinizin üzerine yazılacak.</string>
     <string name="dbmanagementactivity_really_delete_entire_db">Veri tabanının tamamı gerçekten silinsin mi\? Tüm etkinlik verileriniz ve aygıtlarınızla ilgili bilgileriniz kaybolacak.</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Dışa aktarma yoluna erişilemiyor. Lütfen geliştiricilerle iletişime geçin.</string>
     <string name="debugactivity_really_factoryreset">Fabrika ayarlarına sıfırlama yapılması bağlı aygıttaki tüm verileri (destekleniyorsa) silecektir. Xiaomi/Huami aygıtları ayrıca Bluetooth MAC adresini değiştirir, bu nedenle Gadgetbridge tarafından yeni bir aygıt olarak görülürler.</string>
@@ -500,8 +505,8 @@
     <string name="pref_default">Öntanımlı</string>
     <string name="pref_disable_new_ble_scanning">Yeni BLE (BlueTooth Düşük Enerji) taramasını devre dışı bırak</string>
     <string name="pref_display_add_device_fab">Yeni aygıt bağla düğmesi</string>
-    <string name="pref_display_add_device_fab_off">Yalnızca hiçbir aygıt eklenmediğinde görünür</string>
-    <string name="pref_display_add_device_fab_on">Her zaman göster</string>
+    <string name="pref_display_add_device_fab_off">Yalnızca hiçbir aygıt eklenmediğinde görülebilir</string>
+    <string name="pref_display_add_device_fab_on">Her zaman görülebilir</string>
     <string name="pref_header_activitytrackers">Etkinlik izleyiciler</string>
     <string name="pref_header_auto_export">Otomatik dışa aktar</string>
     <string name="pref_header_auto_fetch">Otomatik getir</string>
@@ -750,7 +755,7 @@
     <string name="title_activity_calblacklist">Kara Listeye Alınan Takvimler</string>
     <string name="title_activity_charts">Etkinlik ve Uyku</string>
     <string name="title_activity_controlcenter">Gadgetbridge</string>
-    <string name="title_activity_db_management">Veri tabanı yönetimi</string>
+    <string name="title_activity_db_management">Veri yönetimi</string>
     <string name="title_activity_debug">Hata Ayıklama</string>
     <string name="title_activity_device_specific_settings">Aygıta özel ayarlar</string>
     <string name="title_activity_discovery">Aygıt arama</string>
@@ -1094,7 +1099,7 @@
     <string name="sonyswr12_settings_alarm_interval">Dakikalar içinde akıllı alarm aralığı</string>
     <string name="sonyswr12_settings_low_vibration_summary">Bileklik üzerinde düşük titreşim yoğunluğu sağlayın</string>
     <string name="sonyswr12_settings_stamina_summary">Güç tasarrufu modu, kalp ritminin periyodik olarak otomatik ölçümünü kapatır ve böylece çalışma süresini uzatır</string>
-    <string name="sonyswr12_settings_alarm_interval_summary">Akıllı alarm aralığı, kurulu alarmdan önceki aralıktır. Bu aralıkta cihaz, kullanıcıyı uyandırmak için uykunun en hafif aşamasını tespit etmeye çalışıyor</string>
+    <string name="sonyswr12_settings_alarm_interval_summary">Akıllı alarm aralığı, kurulu alarmdan önceki aralıktır. Bu aralıkta aygıt, kullanıcıyı uyandırmak için uykunun en hafif aşamasını tespit etmeye çalışır</string>
     <string name="sonyswr12_settings_stamina">Güç tasarrufu modu açık</string>
     <string name="devicetype_nut_mini">Nut mini</string>
     <string name="activity_error_no_app_for_png">Bu ekran görüntüsünü paylaşmak için görüntü dosyalarını işleyebilen bir uygulama kurun.</string>
@@ -1148,10 +1153,38 @@
     <string name="activity_list_summary_active_steps">Etkin adımlar</string>
     <string name="devicetype_amazfit_gts2">Amazfit GTS 2</string>
     <string name="devicetype_casiogbx100">Casio GBX-100</string>
-    <string name="prefs_charts_tabs_summary">Görünür çizelge sekmeleri</string>
+    <string name="prefs_charts_tabs_summary">Görülebilir çizelge sekmeleri</string>
     <string name="prefs_charts_tabs">Çizelge sekmeleri</string>
     <string name="menuitem_pomodoro">Pomodoro İzleyici</string>
     <string name="menuitem_sleep">Uyku</string>
     <string name="menuitem_goal">Etkinlik Hedefi</string>
     <string name="devicetype_amazfit_bipu">Amazfit Bip U</string>
+    <string name="pref_summary_connected_advertisement">Bağlı olduğunda bile aygıtı Bluetooth aracılığıyla bulunabilir hale getirir</string>
+    <string name="pref_title_connected_advertisement">Bağlıyken görülebilir</string>
+    <string name="prefs_autoremove_message">SMS bildirimlerini otomatik olarak kaldır</string>
+    <string name="prefs_fake_ring_duration">Sahte sürekli zil</string>
+    <string name="prefs_operating_sounds">Çalışma Sesleri</string>
+    <string name="prefs_key_vibration">Tuş Titreşimi</string>
+    <string name="prefs_autolight">Otomatik ışık</string>
+    <string name="discovery_entered_invalid_authkey">Girdiğiniz gizli kimlik doğrulama anahtarı geçersiz! Düzenlemek için aygıta uzun basın.</string>
+    <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
+    <string name="fw_upgrade_notice_amazfitvergel">Amazfit Verge Lite aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
+\n
+\nLütfen önce .fw dosyasını, sonra .res dosyasını, ve son olarak .gps dosyasını kurun. .fw dosyasını kurduktan sonra saatiniz yeniden başlatılacak.
+\n
+\nNote: Bu dosyalar önceden kurulanlarla tamamen aynıysa .res ve .gps dosyalarını kurmanız gerekmez.
+\n
+\nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
+    <string name="activity_DB_ShowContentButton">Dışa/İçe aktarma dizini içeriğini göster</string>
+    <string name="activity_data_management_directory_content_title">Dizin içeriğini dışa/içe aktar</string>
+    <string name="widget_settings_select_device_title">Aygıt seç</string>
+    <string name="dbmanagementactivity_export_confirmation">Veriler gerçekten dışarı aktarılsın mı\? Önceden dışa aktarılan etkinlik verilerinizin (varsa) ve tercihlerinizin üzerine yazılacak.</string>
+    <string name="dbmanagementactivity_export_data_title">Veriler Dışa Aktarılsın mı\?</string>
+    <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
+    <string name="dbmanagementactivity_export_finished">Silme işlemi tamamlandı</string>
+    <string name="activity_db_management_clean_export_directory_text">Dışa/İçe aktarma dizinindeki dışa aktarılan dosyalara, aygıtınızdaki herhangi bir uygulama tarafından erişilebilir. Eşzamanlama veya yedeklemeden sonra bu dosyaları kaldırmak isteyebilirsiniz. Silmeden önce bir yedeğini aldığınızdan emin olun. GPX dosyaları, alt dizinler ve otomatik dışa aktarılan veri tabanı dosyası (varsa) silinmeyecektir. Dışa/İçe aktarma dizininin yolu şudur:</string>
+    <string name="activity_DB_clean_export_directory_warning_message">Dışa/İçe aktarma dizinindeki dosyalar gerçekten silinsin mi\?</string>
+    <string name="activity_DB_clean_export_directory_warning_title">Dışa/İçe aktarma dizinindeki dosyalar silinsin mi\?</string>
+    <string name="activity_db_management_clean_export_directory_label">Dışa/İçe aktarma dizinindeki dosyaları sil</string>
+    <string name="dbmanagementactivity_error_cleaning_export_directory">%1$s dışa aktarma dizininden dosyaları silerken hata oluştu</string>
 </resources>

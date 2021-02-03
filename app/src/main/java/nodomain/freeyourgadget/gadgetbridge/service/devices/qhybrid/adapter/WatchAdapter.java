@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019-2020 Daniel Dakhno
+/*  Copyright (C) 2019-2021 Andreas Shimokawa, Daniel Dakhno
 
     This file is part of Gadgetbridge.
 
@@ -145,9 +145,15 @@ public abstract class WatchAdapter {
     public void downloadFile(FileHandle handle, boolean fileIsEncrypted) {
     }
 
-    public void uploadFile(FileHandle handle, String filePath, boolean fileIsEncrypted) {
+    public void uploadFileGenerateHeader(FileHandle handle, String filePath, boolean fileIsEncrypted) {
+    }
+
+    public void uploadFileIncludesHeader(String filePath){
     }
 
     public void factoryReset() {
+    }
+
+    public void uninstallApp(String appName) {
     }
 }

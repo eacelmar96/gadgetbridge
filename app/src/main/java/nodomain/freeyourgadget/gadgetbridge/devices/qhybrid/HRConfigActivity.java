@@ -1,3 +1,19 @@
+/*  Copyright (C) 2019-2021 Andreas Shimokawa, Daniel Dakhno
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.qhybrid;
 
 import android.annotation.SuppressLint;
@@ -69,6 +85,7 @@ public class HRConfigActivity extends AbstractGBActivity implements View.OnClick
 
         findViewById(R.id.qhybrid_action_add).setOnClickListener(this);
         findViewById(R.id.qhybrid_file_management_trigger).setOnClickListener(this);
+        findViewById(R.id.qhybrid_apps_management_trigger).setOnClickListener(this);
         findViewById(R.id.calibration_trigger).setOnClickListener(this);
 
         sharedPreferences = GBApplication.getPrefs().getPreferences();
@@ -406,6 +423,9 @@ public class HRConfigActivity extends AbstractGBActivity implements View.OnClick
         } else if(v.getId() == R.id.qhybrid_file_management_trigger) {
             finish();
             startActivity(new Intent(getApplicationContext(), FileManagementActivity.class));
+        } else if(v.getId() == R.id.qhybrid_apps_management_trigger) {
+            finish();
+            startActivity(new Intent(getApplicationContext(), AppsManagementActivity.class));
         } else if(v.getId() == R.id.calibration_trigger) {
             finish();
             startActivity(new Intent(getApplicationContext(), CalibrationActivity.class));

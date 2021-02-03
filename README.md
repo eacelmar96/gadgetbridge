@@ -1,4 +1,8 @@
-Gadgetbridge is now hosted on [codeberg.org](https://codeberg.org/Freeyourgadget/Gadgetbridge/)
+Gadgetbridge is now hosted on [codeberg.org](https://codeberg.org/Freeyourgadget/Gadgetbridge/).
+
+<a href="https://codeberg.org/Freeyourgadget/Gadgetbridge/">
+    <img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-blue-on-white.png" height="60">
+</a>
 
 Gadgetbridge
 ============
@@ -36,6 +40,7 @@ vendor's servers.
 * Amazfit Cor 2 [Wiki](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Amazfit-Cor-2)
 * Amazfit GTR (WARNING: NEEDS VENDOR APP WITH ACCOUNT ONCE) [Wiki](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Amazfit-GTR)
 * Amazfit GTR 2(WARNING: NEEDS VENDOR APP WITH ACCOUNT ONCE) [Wiki](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Amazfit-GTR)
+* Amazfit GTR 2e(WARNING: NEEDS VENDOR APP WITH ACCOUNT ONCE) [Wiki](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Amazfit-GTR)
 * Amazfit GTS (WARNING: NEEDS VENDOR APP WITH ACCOUNT ONCE) [Wiki](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Amazfit-GTS)
 * Amazfit GTS 2(WARNING: NEEDS VENDOR APP WITH ACCOUNT ONCE) [Wiki](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Amazfit-GTS)
 * Amazfit T-Rex (WARNING: NEEDS VENDOR APP WITH ACCOUNT ONCE)
@@ -64,11 +69,12 @@ vendor's servers.
 * NO.1 F1
 * Pebble, Pebble Steel, Pebble Time, Pebble Time Steel, Pebble Time Round [Wiki](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Pebble)
 * Pebble 2 [Wiki](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Pebble)
-* PimeTime (InfiniTime Firmware)
+* PineTime (InfiniTime Firmware)
 * Teclast H10, H30
 * TLW64
 * XWatch (Affordable Chinese Casio-like smartwatches)
 * Vibratissimo (Experimental)
+* Zepp E (WARNING: NEEDS VENDOR APP WITH ACCOUNT ONCE) [Wiki](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Amazfit-GTR)
 * ZeTime [Wiki](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/MyKronoz-ZeTime)
 
 
@@ -114,7 +120,7 @@ Translations can be contributed via https://hosted.weblate.org/projects/freeyour
 ## Community
 
 If you would like to get in touch with other Gadgetbridge users and developers outside of Codeberg, you can do so via:
-* Matrix: #gadgetbridge:matrix.org
+* Matrix: `#gadgetbridge:matrix.org` ([web access via Element.io](https://app.element.io/#/room/#gadgetbridge:matrix.org))
 
 ## Do you have further questions or feedback?
 

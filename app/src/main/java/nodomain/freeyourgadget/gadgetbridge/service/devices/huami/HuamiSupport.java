@@ -1,6 +1,7 @@
-/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Christian
-    Fischer, Daniele Gobbetti, JohnnySun, José Rebelo, Julien Pivotto, Kasha,
-    Michal Novotny, Sebastian Kranz, Sergey Trofimov, Steffen Liebergeld, vanous
+/*  Copyright (C) 2015-2021 Andreas Shimokawa, Carsten Pfeiffer, Christian
+    Fischer, Daniele Gobbetti, Dmitry Markin, JohnnySun, José Rebelo, Julien
+    Pivotto, Kasha, Michal Novotny, Petr Vaněk, Sebastian Kranz, Sergey Trofimov,
+    Steffen Liebergeld, Taavi Eomäe, Zhong Jianxin
 
     This file is part of Gadgetbridge.
 
@@ -804,6 +805,33 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
+    public void onSetCallStateNew(CallSpec callSpec) {
+        if (callSpec.command == CallSpec.CALL_INCOMING) {
+            byte[] message = NotificationUtils.getPreferredTextFor(callSpec).getBytes();
+            int length = 10 + message.length;
+            ByteBuffer buf = ByteBuffer.allocate(length);
+            buf.order(ByteOrder.LITTLE_ENDIAN);
+            buf.put(new byte[]{3, 0, 0, 0, 0, 0});
+            buf.put(message);
+            buf.put(new byte[]{0, 0, 0, 2});
+            try {
+                TransactionBuilder builder = performInitialized("incoming call");
+                writeToChunked(builder, 0, buf.array());
+                builder.queue(getQueue());
+            } catch (IOException e) {
+                LOG.error("Unable to send incoming call");
+            }
+        } else if ((callSpec.command == CallSpec.CALL_START) || (callSpec.command == CallSpec.CALL_END)) {
+            try {
+                TransactionBuilder builder = performInitialized("end call");
+                writeToChunked(builder, 0, new byte[]{3, 3, 0, 0, 0, 0});
+                builder.queue(getQueue());
+            } catch (IOException e) {
+                LOG.error("Unable to send end call");
+            }
+        }
+    }
+
     private void stopCurrentCallNotification() {
         try {
             TransactionBuilder builder = performInitialized("stop notification");
@@ -1510,7 +1538,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         super.onCharacteristicRead(gatt, characteristic, status);
 
         UUID characteristicUUID = characteristic.getUuid();
-        if (GattCharacteristic.UUID_CHARACTERISTIC_GAP_DEVICE_NAME.equals(characteristicUUID)) {
+        if (GattCharacteristic.UUID_CHARACTERISTIC_DEVICE_NAME.equals(characteristicUUID)) {
             handleDeviceName(characteristic.getValue(), status);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_6_BATTERY_INFO.equals(characteristicUUID)) {

@@ -1,3 +1,19 @@
+/*  Copyright (C) 2020-2021 Andreas Shimokawa, Daniel Dakhno
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.parser;
 
 import java.nio.ByteBuffer;
@@ -7,7 +23,7 @@ import java.util.ArrayList;
 public class ActivityFileParser {
     // state flags;
     int heartRateQuality;
-    ActivityEntry.WEARING_STATE wearingState = ActivityEntry.WEARING_STATE.UNKNOWN;
+    ActivityEntry.WEARING_STATE wearingState = ActivityEntry.WEARING_STATE.WEARING;
     int currentTimestamp = -1;
     ActivityEntry currentSample = null;
     int currentId = 1;
@@ -78,11 +94,15 @@ public class ActivityFileParser {
                 break;
             case (byte) 0xE2:
                 byte type = buffer.get();
-                int timestamp = buffer.getInt();
-                short duration = buffer.getShort();
-                short minutesOffset = buffer.getShort();
                 if (type == 0x04) {
+                    int timestamp = buffer.getInt();
+                    short duration = buffer.getShort();
+                    short minutesOffset = buffer.getShort();
                     this.currentTimestamp = timestamp;
+                }else if(type == 0x09){
+                    byte[] args = new byte[2];
+                    buffer.get(args);
+                    // dunno what to do with that
                 }
                 break;
             case (byte) 0xDD:

@@ -1,3 +1,19 @@
+/*  Copyright (C) 2019-2021 Andreas Shimokawa, Carsten Pfeiffer, Daniel Dakhno
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.fossil_hr;
 
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -33,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,11 +67,13 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HybridHRActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.NotificationListener;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.Transaction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.fossil.FossilWatchAdapter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.file.FileHandle;
@@ -67,8 +86,11 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fos
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.file.FileGetRawRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.file.FileLookupRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.file.FilePutRawRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.file.FilePutRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.notification.PlayCallNotificationRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.notification.PlayTextNotificationRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.application.ApplicationInformation;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.application.ApplicationsListRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.async.ConfirmAppStatusRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.authentication.VerifyPrivateKeyRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.buttons.ButtonConfiguration;
@@ -125,6 +147,8 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
     HashMap<String, Bitmap> appIconCache = new HashMap<>();
     String lastPostedApp = null;
 
+    List<ApplicationInformation> installedApplications;
+
     enum CONNECTION_MODE {
         NOT_INITIALIZED,
         AUTHENTICATED,
@@ -141,6 +165,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             queueWrite(new RequestMtuRequest(512));
         }
 
+        listApplications();
         getDeviceInfos();
     }
 
@@ -155,6 +180,10 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         queueWrite(new SetDeviceStateRequest(GBDevice.State.AUTHENTICATING));
 
         negotiateSymmetricKey();
+    }
+
+    private void listApplications(){
+        queueWrite(new ApplicationsListRequest(this));
     }
 
     private void initializeAfterAuthentication(boolean authenticated) {
@@ -173,7 +202,6 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         }
 
         overwriteButtons(null);
-
         loadBackground();
         loadWidgets();
         // renderWidgets();
@@ -186,6 +214,19 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         if (this.connectionMode != CONNECTION_MODE.NOT_INITIALIZED) return;
         this.connectionMode = success ? CONNECTION_MODE.AUTHENTICATED : CONNECTION_MODE.NOT_AUTHENTICATED;
         this.initializeAfterAuthentication(success);
+    }
+
+    @Override
+    public void uninstallApp(String appName) {
+        for(ApplicationInformation appInfo : this.installedApplications){
+            if(appInfo.getAppName().equals(appName)){
+                byte handle = appInfo.getFileHandle();
+                short fullFileHandle = (short)((FileHandle.APP_CODE.getMajorHandle()) << 8 | handle);
+                queueWrite(new FileDeleteRequest(fullFileHandle));
+                listApplications();
+                break;
+            }
+        }
     }
 
     private void setVibrationStrength() {
@@ -356,6 +397,10 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         }
 
         uploadWidgets();
+    }
+
+    public void setInstalledApplications(List<ApplicationInformation> installedApplications) {
+        this.installedApplications = installedApplications;
     }
 
     private void uploadWidgets() {
@@ -552,7 +597,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
     }
 
     @Override
-    public void uploadFile(FileHandle handle, String filePath, boolean fileIsEncrypted) {
+    public void uploadFileGenerateHeader(FileHandle handle, String filePath, boolean fileIsEncrypted) {
         final Intent resultIntent = new Intent(QHybridSupport.QHYBRID_ACTION_UPLOADED_FILE);
         byte[] fileData;
 
@@ -568,13 +613,49 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             return;
         }
 
-        queueWrite(new FilePutRawRequest(handle, fileData, this) {
+        queueWrite(new FilePutRequest(handle, fileData, this) {
             @Override
             public void onFilePut(boolean success) {
                 resultIntent.putExtra("EXTRA_SUCCESS", success);
                 LocalBroadcastManager.getInstance(getContext()).sendBroadcast(resultIntent);
             }
         });
+    }
+
+    @Override
+    public void uploadFileIncludesHeader(String filePath) {
+        final Intent resultIntent = new Intent(QHybridSupport.QHYBRID_ACTION_UPLOADED_FILE);
+        byte[] fileData;
+
+        try {
+            FileInputStream fis = new FileInputStream(filePath);
+            fileData = new byte[fis.available()];
+            fis.read(fileData);
+            fis.close();
+
+            short handleBytes = (short)(fileData[0] & 0xFF | ((fileData[1] & 0xFF) << 8));
+            FileHandle handle = FileHandle.fromHandle(handleBytes);
+
+            if(handle == null){
+                throw new RuntimeException("unknown handle");
+            }
+
+            queueWrite(new FilePutRawRequest(handle, fileData, this) {
+                @Override
+                public void onFilePut(boolean success) {
+                    resultIntent.putExtra("EXTRA_SUCCESS", success);
+                    LocalBroadcastManager.getInstance(getContext()).sendBroadcast(resultIntent);
+                }
+            });
+
+            if(handle == FileHandle.APP_CODE){
+                listApplications();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultIntent.putExtra("EXTRA_SUCCESS", false);
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(resultIntent);
+        }
     }
 
     @Override
@@ -786,6 +867,15 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         // super.setActivityHand(progress);
     }
 
+    private boolean isNotificationWidgetVisible() {
+        for (Widget widget : widgets) {
+            if (widget.getWidgetType() == Widget.WidgetType.LAST_NOTIFICATION) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean playRawNotification(NotificationSpec notificationSpec) {
         String sourceAppId = notificationSpec.sourceAppId;
 
@@ -803,16 +893,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             e.printStackTrace();
         }
 
-        boolean showNotificationIcon = false;
-
-        for(Widget widget : widgets){
-            if(widget.getWidgetType() == Widget.WidgetType.LAST_NOTIFICATION){
-                showNotificationIcon = true;
-                break;
-            }
-        }
-
-        if (showNotificationIcon && sourceAppId != null) {
+        if (isNotificationWidgetVisible() && sourceAppId != null) {
             if (!sourceAppId.equals(this.lastPostedApp)) {
                 if (appIconCache.get(sourceAppId) == null) {
                     try {
@@ -845,7 +926,10 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         }
 
         this.lastPostedApp = null;
-        renderWidgets();
+
+        if (isNotificationWidgetVisible()) {
+            renderWidgets();
+        }
     }
 
     @Override
@@ -1081,24 +1165,32 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 if (version.compareTo(new Version("1.0.2.19")) == -1)
                     singlePressEvent = "single_click";
             }
+            ArrayList<ButtonConfiguration> configs = new ArrayList<>(5);
+            configs.add(new ButtonConfiguration("top_" + singlePressEvent, prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_1_FUNCTION_SHORT, "weatherApp")));
+            configs.add(new ButtonConfiguration("top_hold", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_1_FUNCTION_LONG, "weatherApp")));
+         // configs.add(new ButtonConfiguration("top_double_click", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_1_FUNCTION_DOUBLE, "weatherApp")));
+            configs.add(new ButtonConfiguration("middle_" + singlePressEvent, prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_2_FUNCTION_SHORT, "commuteApp")));
+         // configs.add(new ButtonConfiguration("middle_hold", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_2_FUNCTION_LONG, "commuteApp")));
+         // configs.add(new ButtonConfiguration("middle_double_click", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_2_FUNCTION_DOUBLE, "commuteApp")));
+            configs.add(new ButtonConfiguration("bottom_" + singlePressEvent, prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_3_FUNCTION_SHORT, "musicApp")));
+            configs.add(new ButtonConfiguration("bottom_hold", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_3_FUNCTION_LONG, "musicApp")));
+         // configs.add(new ButtonConfiguration("bottom_double_click", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_3_FUNCTION_DOUBLE, "musicApp")));
 
-            ButtonConfiguration[] buttonConfigurations = new ButtonConfiguration[]{
-                    new ButtonConfiguration("top_" + singlePressEvent, prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_1_FUNCTION_SHORT, "weatherApp")),
-                    new ButtonConfiguration("top_hold", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_1_FUNCTION_LONG, "weatherApp")),
-                    new ButtonConfiguration("top_double_click", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_1_FUNCTION_DOUBLE, "weatherApp")),
+            // filter out all apps not installed on watch
+            ArrayList<ButtonConfiguration> availableConfigs = new ArrayList<>();
+            outerLoop: for (ButtonConfiguration config : configs){
+                for(ApplicationInformation installedApp : installedApplications){
+                    if(installedApp.getAppName().equals(config.getAction())){
+                        availableConfigs.add(config);
+                        continue outerLoop;
+                    }
+                }
+            }
 
-                    new ButtonConfiguration("middle_" + singlePressEvent, prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_2_FUNCTION_SHORT, "commuteApp")),
-                    // new ButtonConfiguration("middle_hold", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_2_FUNCTION_LONG, "commuteApp")),
-                    new ButtonConfiguration("middle_double_click", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_2_FUNCTION_DOUBLE, "commuteApp")),
-
-                    new ButtonConfiguration("bottom_" + singlePressEvent, prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_3_FUNCTION_SHORT, "musicApp")),
-                    new ButtonConfiguration("bottom_hold", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_3_FUNCTION_LONG, "musicApp")),
-                    new ButtonConfiguration("bottom_double_click", prefs.getString(DeviceSettingsPreferenceConst.PREF_BUTTON_3_FUNCTION_DOUBLE, "musicApp")),
-            };
 
             queueWrite(new ButtonConfigurationPutRequest(
                     menuItems,
-                    buttonConfigurations,
+                    availableConfigs.toArray(new ButtonConfiguration[0]),
                     this
             ));
         } catch (JSONException e) {
@@ -1169,7 +1261,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             logger.info("got event id " + eventId);
             try {
                 String jsonString = new String(value, 3, value.length - 3);
-                logger.info(jsonString);
+                // logger.info(jsonString);
                 JSONObject requestJson = new JSONObject(jsonString);
 
                 JSONObject request = requestJson.getJSONObject("req");

@@ -1135,4 +1135,21 @@
     <string name="chart_get_active_and_synchronize">Faça alguma atividade e sincronize o dispositivo.</string>
     <string name="chart_no_active_data">Nenhuma atividade detectada.</string>
     <string name="find_lost_device_message">Pesquisar por %1$s\?</string>
+    <string name="menuitem_dnd">DND</string>
+    <string name="pref_summary_connected_advertisement">Torna o dispositivo descobrível via Bluetooth mesmo quando conectado</string>
+    <string name="pref_title_connected_advertisement">Visível enquanto conectado</string>
+    <string name="prefs_autoremove_message">Remover automaticamente notificações SMS</string>
+    <string name="prefs_fake_ring_duration">Toque contínuo falso</string>
+    <string name="prefs_operating_sounds">Sons de operações</string>
+    <string name="prefs_key_vibration">Vibração de tecla</string>
+    <string name="prefs_autolight">Luz automática</string>
+    <string name="discovery_entered_invalid_authkey">A chave de autenticação secreta é inválida! Faça um pressionamento longo no dispositivo para editar.</string>
+    <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
+    <string name="fw_upgrade_notice_amazfitvergel">Você está prestes a instalar o firmware %s no seu Amazfit Verge Lite.
+\n
+\nCertifique-se de instalar o arquivo .fw, depois disso o arquivo .res e finalmente o arquivo .gps. Sua pulseira será reiniciada após a instalação do arquivo .fw.
+\n
+\nNota: você não precisa instalar .res e .gps se esses forem exatamente os mesmos que os instalados anteriormente.
+\n
+\nPROSSIGA AO SEU PRÓPRIO RISCO!</string>
 </resources>
